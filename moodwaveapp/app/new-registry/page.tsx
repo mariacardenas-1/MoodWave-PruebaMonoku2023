@@ -20,7 +20,7 @@ export default  async function NewRegistry() {
 
    
     return(
-        <div className="p-6">
+        <div className="p-6 gap-8 flex flex-col">
             <div className="text-white font-bold p-5 text-xl">Como te sientes hoy?</div>
            <FeelingForm />
         </div>
