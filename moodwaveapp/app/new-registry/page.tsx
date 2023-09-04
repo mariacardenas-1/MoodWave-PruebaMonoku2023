@@ -1,8 +1,10 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs"
 import { cookies } from "next/headers"
 import { redirect } from 'next/navigation'
+import FeelingForm from "@/components/FeelingForm"
 
-export default  async function Dashboard() {
+
+export default  async function NewRegistry() {
 
     const supabase = createServerComponentClient({ cookies })
 
@@ -15,9 +17,12 @@ export default  async function Dashboard() {
     if(!user){
         redirect('/login')
     }
+
+   
     return(
-        <div >
-           <pre className="text-white">{JSON.stringify(data, null, 2)}</pre>
+        <div className="p-6">
+            <div className="text-white font-bold p-5 text-xl">Como te sientes hoy?</div>
+           <FeelingForm />
         </div>
     )
 }

@@ -4,6 +4,9 @@ import Link from 'next/link'
 import LogoutButton from '../components/LogoutButton'
 import SupabaseLogo from '../components/SupabaseLogo'
 import NextJsLogo from '../components/NextJsLogo'
+import HomeButton from '@/components/HomeButton'
+import { redirect } from 'next/navigation'
+
 
 export const dynamic = 'force-dynamic'
 
@@ -16,10 +19,13 @@ export default async function Index() {
   } = await supabase.auth.getUser()
 
   return (
-    <div className="w-full flex flex-col items-center">
-      <div className='text-pink-700 font-bold text-6xl mb-14'>MoodWave</div>
-      <p className='text-white w-8/12'>Sabemos que las emociones a veces pueden parecer una montaña rusa, por eso queremos ayudarte en el proceso de conocerte.</p>
-      <button className='bg-pink-700 font-bold p-2.5 rounded-2xl w-40 text-lg text-grey mt-14'>Empezar</button>
+    <div className="xl:w-5/12 md:items-start md:w-10/12 w-full flex flex-col items-center">
+      <div className='text-pink font-bold md:text-start text-4xl sm:text-5xl lg:text-6xl my-8 '>MoodWave</div>
+      <p className='text-white text-center md:text-start w-10/12 lg:w-8/12'>Sabemos que las emociones a veces pueden parecer una montaña rusa, por eso queremos ayudarte en el proceso de conocerte.</p>
+      <HomeButton label='Registar emociones' routePath={'/new-registry'} />
+      {user && (
+        <HomeButton label='Ver mi historial' routePath={'/dashboard'} />
+      )}
     </div>
   )
 }

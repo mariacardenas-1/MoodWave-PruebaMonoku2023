@@ -49,12 +49,12 @@ export default function Login() {
           placeholder="••••••••"
           required
         />
-        <button className="bg-green-700 rounded px-4 py-2 text-white mb-2">
+        <button className="bg-pink rounded px-4 py-2 text-gray mb-2 font-bold  hover:text-white ">
           Sign In
         </button>
         <button
           formAction="/auth/sign-up"
-          className="border border-gray-700 rounded px-4 py-2 text-black mb-2"
+          className="border border-pink rounded px-4 py-2 text-white mb-2 font-bold hover:bg-pinkHover "
         >
           Sign Up
         </button>
