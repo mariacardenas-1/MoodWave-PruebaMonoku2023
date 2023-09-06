@@ -10,7 +10,9 @@ import increible from '../public/assets/increible.png'
 
 export default function FeelingForm() {
     const url = process.env.NEXT_PUBLIC_LOCAL_HOST
-    const [feelingSelected, SetFeelingSelected] = useState('') 
+    const [feelingSelected, setFeelingSelected] = useState('') 
+    const [prompt, setPrompt]= useState('')
+
     const feelingsOptions= [
         {feeling: 'Horrible', icon: horrible },
         {feeling: 'Mal', icon: mal },
@@ -18,6 +20,7 @@ export default function FeelingForm() {
         {feeling: 'Bien', icon: bien },
         {feeling: 'Increible', icon: increible },
     ]
+    
     const handleSubmit = async (e: FormEvent<HTMLElement>) => {
         e.preventDefault()
 
@@ -28,9 +31,17 @@ export default function FeelingForm() {
             method: 'post',
             body: JSON.stringify({ feeling, note })
         })
+
+        const response = await fetch('/api/analize', {
+            method: 'post',
+           
+            body: JSON.stringify({ prompt }),
+        });
+        const data = await response.json()
+        console.log({data})
     }
     const handleFeelingSelected = (feeling: string) => {
-        SetFeelingSelected(feeling)
+        setFeelingSelected(feeling)
     }
 
     return (
@@ -45,27 +56,13 @@ export default function FeelingForm() {
                             <div className={`${feelingSelected === f.feeling ? 'text-pink font-bold' : 'text-white'} text-center `}>{f.feeling}</div>
                         </label>
                     </div>
-                    // <div key={f.feeling} className="text-sm ">
-
-                    //     <div
-                    //     name='feeling'
-                    //     key={f.feeling}
-                    //     // onClick={(e)=>handleFeelingSelected(e, f.feeling)}
-                    //     // onClick={(e)=>preventReload(e)}
-                    //     // className={`${feelingSelected === f.feeling ? 'text-pink w-10 flex flex-col items-center font-bold': 'text-normal text-white w-10 flex flex-col items-center' }`}
-                    //     >
-                    //         <Image src={f.icon} alt={f.feeling}/>
-                    //         <div>{f.feeling}</div>
-                    //     </div>
-                    // </div>
                 ))}
             </div>
-            {/* <input placeholder="holaaaa" type="texarea" onChange={(e)=>console.log(e.target.value)}></input> */}
             <div className="gap-4 flex flex-col">
                 <label className="text-pink font-bold">Nota rápida</label>
                 <textarea rows={4} 
                 name='note'
-                // onChange={(e)=>console.log(e.target.value)} 
+                onChange={(e)=>setPrompt(e.target.value)}
                 className="block p-2.5 w-full text-sm text-white bg-gray rounded-lg border border-pink" placeholder="Describe tus sentiminetos aquí..."></textarea>
             </div>
             <button type="submit" className="w-full p-1.5 border border-pink hover:font-bold text-white hover:text-gray bg-pinkHover hover:bg-pink rounded-md">Submit</button>
