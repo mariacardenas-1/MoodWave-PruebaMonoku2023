@@ -47,7 +47,7 @@ const FeelingsGraphic = ({values}) => {
         <div>
           <Doughnut data={data} />
         </div>
-        <div className=''>
+        <div>
           <p className='p-5 text-justify text-white md:mx-auto md:w-11/12'>Experimentamos diversas emociones en la vida diaria, esenciales para nuestra identidad y relación con el mundo. Hemos registrado tus emociones del último mes y te presentamos un resumen visual. Reflexiona sobre tus estados de ánimo y cómo te sientes en diferentes momentos. Cada color representa una emoción. Utiliza esta información para tu bienestar emocional y sigue registrando tus emociones para crecer y vivir conscientemente.
           </p>
         </div>

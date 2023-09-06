@@ -33,8 +33,7 @@ export default  async function Dashboard() {
         {name: 'Increible', value: getTotalFeeling('increible')}
     ]
     return(
-        <div className="">
-           {/* <pre className="text-white">{JSON.stringify(data, null, 2)}</pre> */}
+        <div>
            <FeelingsGraphic values={values}/>
         </div>
     )

@@ -11,7 +11,8 @@ import increible from '../public/assets/increible.png'
 export default function FeelingForm() {
     const url = process.env.NEXT_PUBLIC_LOCAL_HOST
     const [feelingSelected, setFeelingSelected] = useState('') 
-    const [prompt, setPrompt]= useState('')
+    const [note, setNote]= useState('')
+    const [error, setError] = useState('')
 
     const feelingsOptions= [
         {feeling: 'Horrible', icon: horrible },
@@ -27,10 +28,16 @@ export default function FeelingForm() {
         const formElement = e.currentTarget as HTMLFormElement;
         const { feeling, note } = Object.fromEntries(new FormData(formElement));
 
-        await fetch(`${url}api/new-entry`, {
-            method: 'post',
-            body: JSON.stringify({ feeling, note })
-        })
+        try{
+            await fetch(`${url}api/new-entry`, {
+                method: 'post',
+                body: JSON.stringify({ feeling, note })
+            })
+            window.location.href='/dashboard'
+        }catch(error){
+            setError('Ups! nuestros servivios estan caidos, inteta de nuevo mas tarde')
+        }
+        
 
         const response = await fetch('/api/analize', {
             method: 'post',
@@ -62,10 +69,11 @@ export default function FeelingForm() {
                 <label className="text-pink font-bold">Nota rápida</label>
                 <textarea rows={4} 
                 name='note'
-                onChange={(e)=>setPrompt(e.target.value)}
+                onChange={(e)=>setNote(e.target.value)}
                 className="block p-2.5 w-full text-sm text-white bg-gray rounded-lg border border-pink" placeholder="Describe tus sentiminetos aquí..."></textarea>
             </div>
-            <button type="submit" className="w-full p-1.5 border border-pink hover:font-bold text-white hover:text-gray bg-pinkHover hover:bg-pink rounded-md">Submit</button>
+            <button disabled={feelingSelected === '' || note === ''} type="submit" className="w-full p-1.5 border border-pink hover:font-bold text-white hover:text-gray bg-pinkHover hover:bg-pink rounded-md disabled:bg-pinkHover disabled:border-slate-600 disabled:text-slate-400 disabled:font-normal">Submit</button>
+            <div className=" text-red-500">{error && `** ${error} **`}</div>
         </form>
     )
   }
